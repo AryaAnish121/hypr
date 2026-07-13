@@ -31,8 +31,6 @@ hl.monitor({
 -- Set programs that you use
 local terminal    = "kitty"
 local fileManager = "nautilus"
-local menu        = "vicinae toggle"
-local home        = os.getenv("HOME")
 
 
 -------------------
@@ -50,13 +48,7 @@ local home        = os.getenv("HOME")
 --   hl.exec_cmd("waybar & hyprpaper & firefox")
 -- end)
 hl.on("hyprland.start", function()
-  hl.exec_cmd("EMOJI_FONT=\"Apple Color Emoji\" vicinae server")
-  hl.exec_cmd("hyprctl setcursor macOS 24")
   hl.exec_cmd("systemctl --user enable --now warp-taskbar")
-  hl.exec_cmd("hyprpaper & hyprsunset & hypridle & dunst")
-  hl.exec_cmd("qs --path " .. home .. "/krypton")
-  hl.exec_cmd("sleep 3s; hyprctl plugin load " .. home .. "/.local/hyprselect/hyprselect.so")
-  hl.exec_cmd(home .. "/krypton/scripts/watch_dir_changes.sh")
 end)
 
 
@@ -65,12 +57,6 @@ end)
 -------------------------------
 
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
-
-hl.env("XCURSOR_SIZE", "24")
-hl.env("HYPRCURSOR_SIZE", "24")
-hl.env("QT_QPA_PLATFORMTHEME", "kde")
-hl.env("XDG_MENU_PREFIX", "arch-")
-hl.env("OZONE_PLATFORM", "wayland")
 
 
 -----------------------
@@ -110,7 +96,7 @@ hl.config({
 
         col = {
             -- active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
-            active_border = "rgba(595959aa)",
+            active_border = "#000000",
             inactive_border = "rgba(595959aa)",
         },
 
@@ -291,16 +277,9 @@ local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
-hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 -- hl.bind("Print", hl.dsp.exec_cmd("rishot"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("grim -g \"$(slurp -w 0)\" - | wl-copy"))
-hl.bind(mainMod .. " + S", hl.dsp.global("quickshell:screenshot"))
-hl.bind(mainMod .. " + ESCAPE", hl.dsp.global("quickshell:powerMenu"))
-hl.bind(mainMod .. " + Comma", hl.dsp.global("quickshell:wallpaper"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
@@ -383,12 +362,7 @@ hl.window_rule({
 --     no_anim = true,
 -- })
 -- overlayLayerRule:set_enabled(false)
-hl.layer_rule({
-  match = { namespace = "vicinae" },
-  name = "vicinae-blur",
-  blur = true,
-  ignore_alpha = 0,
-})
+
 
 -- Hyprland-run windowrule
 hl.window_rule({
@@ -406,30 +380,4 @@ hl.window_rule({
 -- Down here you can write or source anything that you want to override from Ambxst's settings.
 
 
-hl.window_rule({
-    match = {
-        class = ".*"
-    },
-    no_blur = true
-})
-
-hl.window_rule({
-    match = {
-        class = ".*[Zz]athura.*"
-    },
-    no_blur = false
-})
-
-hl.layer_rule({
-  match = { namespace = "qsdock" },
-  name = "dock-blur",
-  blur = true,
-  ignore_alpha = 0,
-})
-
-hl.layer_rule({
-  match = { namespace = "wallpaper" },
-  name = "wallpaper-blur",
-  blur = true,
-  ignore_alpha = 0,
-})
+loadfile(os.getenv("HOME") .. "/.config/hypr/krypton.lua")()
