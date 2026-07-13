@@ -32,6 +32,7 @@ hl.monitor({
 local terminal    = "kitty"
 local fileManager = "nautilus"
 local menu        = "vicinae toggle"
+local home        = os.getenv("HOME")
 
 
 -------------------
@@ -53,9 +54,9 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("hyprctl setcursor macOS 24")
   hl.exec_cmd("systemctl --user enable --now warp-taskbar")
   hl.exec_cmd("hyprpaper & hyprsunset & hypridle & dunst")
-  hl.exec_cmd("qs --path /home/arya/Projects/customqs")
-  hl.exec_cmd("sleep 3s; hyprctl plugin load /home/arya/.local/hyprselect/hyprselect.so")
-  hl.exec_cmd("/home/arya/Projects/customqs/scripts/watch_dir_changes.sh")
+  hl.exec_cmd("qs --path " .. home .. "/krypton")
+  hl.exec_cmd("sleep 3s; hyprctl plugin load " .. home .. "/.local/hyprselect/hyprselect.so")
+  hl.exec_cmd(home .. "/krypton/scripts/watch_dir_changes.sh")
 end)
 
 
@@ -69,6 +70,7 @@ hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("QT_QPA_PLATFORMTHEME", "kde")
 hl.env("XDG_MENU_PREFIX", "arch-")
+hl.env("OZONE_PLATFORM", "wayland")
 
 
 -----------------------
