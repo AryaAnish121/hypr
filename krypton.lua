@@ -69,6 +69,12 @@ hl.layer_rule({
   ignore_alpha = 0,
 })
 
+hl.layer_rule({
+  match = { namespace = "vicinae" },
+  name = "vicinae-no-animation",
+  no_anim = true,
+})
+
 hl.window_rule({
     match = {
         class = ".*"
