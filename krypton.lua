@@ -1,5 +1,4 @@
 local home = os.getenv("HOME")
-local menu = "vicinae toggle"
 local mainMod = "SUPER"
 
 hl.env("XCURSOR_SIZE", "24")
@@ -60,7 +59,6 @@ hl.bind(mainMod .. " + S", hl.dsp.global("quickshell:screenshot"))
 hl.bind(mainMod .. " + ESCAPE", hl.dsp.global("quickshell:powerMenu"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("grim -g \"$(slurp -w 0)\" - | wl-copy"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
-hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(menu))
 
 hl.layer_rule({
   match = { namespace = "vicinae" },
