@@ -41,6 +41,10 @@ hl.config({
             vibrancy  = 0.1696,
         }
     },
+
+    input = {
+        numlock_by_default = true,
+    },
 })
 
 -- hl.window_rule({
